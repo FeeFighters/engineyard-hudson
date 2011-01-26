@@ -1,13 +1,33 @@
-# Nginx config for Hudson CI behind a virtual host
-# TODO: Add SSL support as per http://gist.github.com/460906
+# Nginx config for Hudson CI behind a virtual host with SSL.
 
 upstream hudson {
   server localhost:<%= @port %>;
 }
 
+# Redirect all HTTP requests to HTTPS.
 server {
-  listen 80 default;
-  server_name hudson.example.com;
+  listen 80;
+  server_name hudson.feefighters.com;
+  location / {
+    rewrite ^ https://hudson.feefighters.com$request_uri? permanent;
+  }
+}
+
+# Proxy HTTPS requests on hudson.example.com to localhost Hudson server.
+server {
+  listen 443;
+  server_name hudson.feefighters.com;
+
+  ssl_on;
+  ssl_certificate /etc/nginx/ssl/hudson_server.crt;
+  ssl_certificate_key /etc/nginx/ssl/hudson_server.key;
+  ssl_session_cache shared:SSL:1m;
+  ssl_session_timeout 5m;
+
+  # Only allow GET, HEAD, and POST requests.
+  if ($request_method !~ ^(GET|HEAD|POST)$ ) {
+    return 444;
+  }
 
   location / {
     proxy_set_header X-Real-IP $remote_addr;
@@ -16,5 +36,6 @@ server {
     proxy_set_header Host $http_host;
     proxy_next_upstream error;
     proxy_pass http://hudson;
+    proxy_redirect http://hudson.feefighters.com/ https://hudson.feefighters.com/;
   }
 }
