@@ -18,7 +18,7 @@ server {
   listen 443;
   server_name hudson.feefighters.com;
 
-  ssl_on;
+  ssl on;
   ssl_certificate /etc/nginx/ssl/hudson_server.crt;
   ssl_certificate_key /etc/nginx/ssl/hudson_server.key;
   ssl_session_cache shared:SSL:1m;
