@@ -8,11 +8,12 @@ upstream hudson {
 server {
   listen 80;
   server_name hudson.feefighters.com;
+
+  include /etc/nginx/servers/hudson_reverse_proxy/custom.locations.conf;
+
   location / {
     rewrite ^ https://hudson.feefighters.com$request_uri? permanent;
   }
-
-  include /etc/nginx/servers/hudson_reverse_proxy/custom.locations.conf;
 }
 
 # Proxy HTTPS requests on hudson.example.com to localhost Hudson server.
