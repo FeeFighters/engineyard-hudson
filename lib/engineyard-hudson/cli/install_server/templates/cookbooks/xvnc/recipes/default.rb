@@ -22,7 +22,7 @@ execute "link for getting install to work right" do
 end
 
 execute "install tightvnc" do
-  command 'package "tightvnc"'
+  command 'emerge tightvnc'
 end
 
 
