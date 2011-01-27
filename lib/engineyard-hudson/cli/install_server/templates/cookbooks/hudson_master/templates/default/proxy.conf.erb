@@ -11,6 +11,8 @@ server {
   location / {
     rewrite ^ https://hudson.feefighters.com$request_uri? permanent;
   }
+
+  include /etc/nginx/servers/hudson_reverse_proxy/custom.locations.conf;
 }
 
 # Proxy HTTPS requests on hudson.example.com to localhost Hudson server.
