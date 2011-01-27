@@ -18,5 +18,9 @@ execute "link for getting install to work right" do
   not_if "grep 'tightvnc server' /etc/portage/package.use"
 end
 
-package "tightvnc"
+execute "install tightvnc" do
+  command 'package "tightvnc"'
+end
+
+
 
