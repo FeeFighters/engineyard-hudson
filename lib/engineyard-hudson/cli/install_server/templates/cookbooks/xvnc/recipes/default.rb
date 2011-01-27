@@ -8,6 +8,7 @@ execute "link fonts" do
 end
 execute "link rgb.txt" do
   command "ln -s /usr/share/X11/rgb.txt /usr/lib/X11/rgb.txt"
+  not_if { FileTest.exists?("/usr/lib/X11/rgb.txt") }
 end
 execute "link for getting install to work right" do
   command "ln -s /usr /usr/X11R6"
