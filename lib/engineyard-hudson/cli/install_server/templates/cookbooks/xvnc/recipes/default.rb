@@ -18,12 +18,18 @@ end
 
 execute "link for getting install to work right" do
   command 'echo "net-misc/tightvnc server" >> /etc/portage/package.use'
-  not_if "grep 'tightvnc server' /etc/portage/package.use"
+  not_if "grep 'net-misc/tightvnc' /etc/portage/package.use"
 end
 
 execute "install tightvnc" do
   command 'emerge tightvnc'
 end
 
+execute "link for getting install to work right" do
+  command 'echo "media-gfx/imagemagick bzip2 corefonts jpeg jpeg2k openmp perl png q8 svg tiff truetype wmf xml zlib X -djvu -doc -fontconfig -fpx -graphviz -gs -hdri -jbig -lcms -nocxx -openexr -q32 -raw" >> /etc/portage/package.use'
+  not_if "grep 'media-gfx/imagemagick' /etc/portage/package.use"
+end
 
-
+execute "install imagemagick" do
+  command 'emerge imagemagick'
+end
