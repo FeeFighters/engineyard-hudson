@@ -31,5 +31,5 @@ execute "link for getting install to work right" do
 end
 
 execute "install imagemagick" do
-  command 'emerge imagemagick'
+  command 'emerge update --update --newuse imagemagick'
 end
